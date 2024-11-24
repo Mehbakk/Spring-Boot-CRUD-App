@@ -28,7 +28,11 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build
 
-      # Step 4: Upload the generated JAR file as an artifact
+      # Step 4: Debug output to ensure the JAR file is generated
+      - name: Debug Build Output
+        run: ls -R build/
+
+      # Step 5: Upload the generated JAR file as an artifact
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -51,11 +55,15 @@ jobs:
         with:
           name: java-app
 
+      # Step 2: Locate the JAR file from the build artifacts
+      - name: Locate JAR File
+        id: locate-jar
+        run: echo "JAR_FILE=$(ls build/libs/*.jar | head -n 1)" >> $GITHUB_ENV
 
       # Step 3: Deploy the downloaded artifact to Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-            app-name: 'mehbak-back-api'
-            publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_MEHBAK_BACK_API }}
-            package: ${{ env.JAR_FILE }}
+          app-name: 'mehbak-back-api'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_MEHBAK_BACK_API }}
+          package: ${{ env.JAR_FILE }}
