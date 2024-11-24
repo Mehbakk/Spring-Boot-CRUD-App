@@ -65,6 +65,6 @@ jobs:
         with:
           app-name: 'mehbak-back-api'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_MEHBAK_BACK_API }}
-          package: './build/libs/crud-Api-0.0.1-SNAPSHOT.jar'  # Update this path after checking output
+          package: './crud-Api-0.0.1-SNAPSHOT.jar'  # Correct path to the .jar file
   
 
