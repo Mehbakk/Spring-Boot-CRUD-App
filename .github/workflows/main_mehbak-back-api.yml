@@ -55,9 +55,9 @@ jobs:
         with:
           name: java-app
 
-      # Step 2: Debug Artifact Location
+      # Step 2: Debug Artifact Location (Check workspace contents)
       - name: Debug Artifact Location
-        run: dir ./java-app
+        run: dir  # Check all files in the workspace
 
       # Step 3: Deploy to Azure Web App
       - name: Deploy to Azure Web App
@@ -65,6 +65,6 @@ jobs:
         with:
           app-name: 'mehbak-back-api'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_MEHBAK_BACK_API }}
-          package: './java-app/build/libs/crud-Api-0.0.1-SNAPSHOT.jar'  # Update this after checking the artifact location
-
+          package: './build/libs/crud-Api-0.0.1-SNAPSHOT.jar'  # Update this path after checking output
+  
 
