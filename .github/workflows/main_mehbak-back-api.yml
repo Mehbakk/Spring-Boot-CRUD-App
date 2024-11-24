@@ -51,19 +51,12 @@ jobs:
         with:
           name: java-app
 
-      # Step 2: Log in to Azure
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       # Step 3: Deploy the downloaded artifact to Azure Web App
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'mehbak-back'
-          slot-name: 'production'
-          package: 'java-app/*.jar'
+            app-name: 'mehbak-back'
+            slot-name: 'production'
+            publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_056C8263D5944C718C3B485CA5F783B6 }}
+            package: ${{ env.JAR_FILE }}
