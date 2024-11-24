@@ -50,4 +50,4 @@ jobs:
           app-name: 'mehbak-back-api'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_056C8263D5944C718C3B485CA5F783B6 }}
-          package: '*.jar'
+          package: ${{ env.JAR_FILE }}
