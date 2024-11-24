@@ -37,7 +37,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: build/libs/*.jar
+          path: build/libs/crud-Api-0.0.1-SNAPSHOT.jar
 
   deploy:
     runs-on: windows-latest
@@ -49,21 +49,16 @@ jobs:
       id-token: write
 
     steps:
-      # Step 1: Download the artifact from the build job
+      # Step 1: Download artifact from build job
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: java-app
 
-      # Step 2: Locate the JAR file from the build artifacts
-      - name: Locate JAR File
-        id: locate-jar
-        run: echo "JAR_FILE=$(ls build/libs/*.jar | head -n 1)" >> $GITHUB_ENV
-
-      # Step 3: Deploy the downloaded artifact to Azure Web App
+      # Step 2: Deploy to Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'mehbak-back-api'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_MEHBAK_BACK_API }}
-          package: ${{ env.JAR_FILE }}
+          package: 'build/libs/crud-Api-0.0.1-SNAPSHOT.jar'
